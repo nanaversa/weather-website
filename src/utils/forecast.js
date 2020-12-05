@@ -23,6 +23,12 @@ const forecast = (latitude, longitude, location, callback) => {
   };
 
   request(options, (error, response) => {
+    let C;
+
+    let F = response.body.main.temp;
+    C = ((F - 32) * 5) / 9;
+    let celsius = C.toFixed(2);
+
     if (error) {
       callback("Access Denied! Check Network", undefined);
     } else if (response.body.error) {
@@ -32,7 +38,7 @@ const forecast = (latitude, longitude, location, callback) => {
 
       callback(
         undefined,
-        `The weather is currently ${itemDesc} at ${response.body.name} which is located in ${response.body.sys.country}`
+        `The weather is currently ${itemDesc}, with a temperature of ${celsius}°C at ${response.body.name} which is located in ${response.body.sys.country}`
       );
     }
   });
