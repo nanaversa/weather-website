@@ -23,11 +23,8 @@ const forecast = (latitude, longitude, location, callback) => {
   };
 
   request(options, (error, response) => {
-    let C;
-
-    let F = response.body.main.temp;
-    C = ((F - 32) * 5) / 9;
-    let celsius = C.toFixed(2);
+    let F = Math.round(response.body.main.temp - 273.15);
+    let celsius = F.toFixed(2);
 
     if (error) {
       callback("Access Denied! Check Network", undefined);
